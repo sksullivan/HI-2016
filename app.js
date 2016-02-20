@@ -9,7 +9,7 @@ var app = require('express')(),
     url  = 'http://localhost:' + port + '/',
     send = require('./send.js');
 
-var remotes = [];
+var remotesAndCommands = [];
 
 server.listen(port);
 console.log("Express server listening on port " + port);
@@ -19,22 +19,32 @@ app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');
 });
 io.on('connection', function(socket){
-    getRemotes();
+    getRemotesAndCommands();
     console.log('a user connected');
     socket.on('disconnect', function(){
       console.log('user disconnected');
     });
-    
-    socket.emit('availableRemotes', remotes);
+    console.log(remotesAndCommands);
+    socket.emit('availableRemotes', remotesAndCommands);
 });
 
-var getRemotes = function(){
+var getRemotesAndCommands = function(){
   send.list(null,null, function(err, stdout, stderr){
       var remotes = stderr.split('\n');
-      console.log('remotes: '+remotes);
       remotes.forEach(function(element, index, array){
-        var name = element.match(/\s(.*)$/);
-        console.log(name);
-      })
+        var remoteName = element.match(/\s(.*)$/);
+        if(remoteName){
+          remotesAndCommands[remoteName[1]] = [];
+          send.list(remoteName,null, function(err, stdout, stderr){
+            var commands = stderr.split('\n');
+            commands.forEach(function(element, index, array){
+              var commandName = element.match(/\s.*\s(.*)$/);
+              if(commandName && commandName[1]){
+                remotesAndCommands[remoteName].push(commandName[1]);
+              }
+            });
+          });
+        }
+      });
     });
 }

@@ -10,7 +10,7 @@ var app = require('express')(),
     send = require('./send.js');
 
 var remotesAndCommands = [];
-
+getRemotesAndCommands();
 server.listen(port);
 console.log("Express server listening on port " + port);
 console.log(url);
@@ -19,7 +19,7 @@ app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');
 });
 io.on('connection', function(socket){
-    getRemotesAndCommands();
+    
     console.log('a user connected');
     socket.on('disconnect', function(){
       console.log('user disconnected');

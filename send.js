@@ -6,6 +6,29 @@ exports.list = function(remote, code, callback){
   	if (!code) code = '';
 
   	var sendComm = command + ' LIST "' + remote + '" "' + code + '"';
-  	console.log(sendComm)
   	return exec(sendComm, callback);
-}
+};
+
+exports.sendOnce = function(remote, code, callback){
+	if (!remote) remote = '';
+  	if (!code) code = '';
+
+  	var sendComm = command + ' SEND_ONCE "' + remote + '" "' + code + '"';
+  	return exec(sendComm, callback);
+};
+
+exports.sendStart = function(remote, code){
+	if (!remote) remote = '';
+  	if (!code) code = '';
+
+  	var sendComm = command + ' SEND_START "' + remote + '" "' + code + '"';
+  	return exec(sendComm);
+};
+
+exports.sendStop = function(remote, code){
+	if (!remote) remote = '';
+  	if (!code) code = '';
+
+  	var sendComm = command + ' SEND_STOP "' + remote + '" "' + code + '"';
+  	return exec(sendComm);
+};

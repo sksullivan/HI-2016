@@ -25,7 +25,18 @@ io.on('connection', function(socket){
       console.log('user disconnected');
     });
     socket.emit('availableRemotes', remotesAndCommands);
+
+    socket.on('buttonPress', function(msg){
+      send.sendOnce(msg.remote, msg.code, function(err, stdout, stderr){
+        socket.emit('kek', {err, stdout, stderr});
+      });
+    });
 });
+
+
+
+
+
 
 var getRemotesAndCommands = function(){
   send.list(null,null, function(err, stdout, stderr){

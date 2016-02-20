@@ -4,7 +4,7 @@
     <script src="/socket.io/socket.io.js"></script>
 	<script>
   		var socket = io();
-     	socket.on('ping', function(msg){
+     	socket.on('initialConnection', function(msg){
      			console.log(msg);
      	});
 	</script>

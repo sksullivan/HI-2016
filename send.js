@@ -1,7 +1,4 @@
 var exec = require('child_process').exec;
-
-exports = module.exports = send;
-
 var command = "irsend";
 
 exports.list = function(remote, code, callback){

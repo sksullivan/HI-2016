@@ -18,14 +18,14 @@ console.log(url);
 app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');
 });
-
 io.on('connection', function(socket){
+    getRemotes();
     console.log('a user connected');
     socket.on('disconnect', function(){
       console.log('user disconnected');
     });
     
-    //socket.emit('availableRemotes', send.list());
+    socket.emit('availableRemotes', remotes);
 });
 
 var getRemotes = function(){

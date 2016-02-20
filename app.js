@@ -40,7 +40,7 @@ var getRemotesAndCommands = function(){
             commands.forEach(function(element, index, array){
               var commandName = element.match(/\s.*\s(.*)$/);
               if(commandName && commandName[1]){
-                remotesAndCommands[remoteName.push(commandName[1]);
+                remotesAndCommands[remoteName].push(commandName[1]);
               }
             });
           });

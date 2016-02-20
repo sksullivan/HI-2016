@@ -33,13 +33,14 @@ var getRemotesAndCommands = function(){
       remotes.forEach(function(element, index, array){
         var remoteName = element.match(/\s(.*)$/);
         if(remoteName){
-          remotesAndCommands[remoteName[1]] = [];
+          remoteName = remoteName[1];
+          remotesAndCommands[remoteName] = [];
           send.list(remoteName,null, function(err, stdout, stderr){
             var commands = stderr.split('\n');
             commands.forEach(function(element, index, array){
               var commandName = element.match(/\s.*\s(.*)$/);
               if(commandName && commandName[1]){
-                remotesAndCommands[remoteName[1]].push(commandName[1]);
+                remotesAndCommands[remoteName.push(commandName[1]);
               }
             });
           });

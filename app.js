@@ -10,7 +10,7 @@ var app = require('express')(),
     send = require('./send.js');
 
 var remotesAndCommands = [];
-getRemotesAndCommands();
+
 server.listen(port);
 console.log("Express server listening on port " + port);
 console.log(url);
@@ -48,3 +48,4 @@ var getRemotesAndCommands = function(){
       });
     });
 }
+getRemotesAndCommands();

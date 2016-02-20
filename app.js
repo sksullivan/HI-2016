@@ -8,11 +8,8 @@ var app = require('express')(),
     port = 8080,
     url  = 'http://localhost:' + port + '/',
     send = require('./send.js');
-/* We can access nodejitsu enviroment variables from process.env */
-/* Note: the SUBDOMAIN variable will always be defined for a nodejitsu app */
-if(process.env.SUBDOMAIN){
-  url = 'http://' + process.env.SUBDOMAIN + '.jit.su/';
-}
+
+var remotes = [];
 
 server.listen(port);
 console.log("Express server listening on port " + port);
@@ -27,10 +24,17 @@ io.on('connection', function(socket){
     socket.on('disconnect', function(){
       console.log('user disconnected');
     });
-    send.list(null,null, function(err, stdout, stderr){
-      console.log(err)
-      console.log(stdout)
-      console.log(stderr)
-    });
+    
     //socket.emit('availableRemotes', send.list());
 });
+
+var getRemotes = function(){
+  send.list(null,null, function(err, stdout, stderr){
+      var remotes = stderr.split('\n');
+      console.log('remotes: '+remotes);
+      remotes.forEach(function(element, index, array){
+        var name = element.match(/\s(.*)$/);
+        console.log(name);
+      })
+    });
+}

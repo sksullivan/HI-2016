@@ -24,7 +24,6 @@ io.on('connection', function(socket){
     socket.on('disconnect', function(){
       console.log('user disconnected');
     });
-    console.log(remotesAndCommands);
     socket.emit('availableRemotes', remotesAndCommands);
 });
 
@@ -32,7 +31,7 @@ var getRemotesAndCommands = function(){
   send.list(null,null, function(err, stdout, stderr){
       var remotes = stderr.split('\n');
       remotes.forEach(function(element, index, array){
-        var remoteName = element.match(/\s(.*)$/);
+        var remoteName = element.match(/\s(.*)$/)[1];
         if(remoteName){
           remotesAndCommands[remoteName[1]] = [];
           send.list(remoteName,null, function(err, stdout, stderr){
@@ -40,7 +39,7 @@ var getRemotesAndCommands = function(){
             commands.forEach(function(element, index, array){
               var commandName = element.match(/\s.*\s(.*)$/);
               if(commandName && commandName[1]){
-                remotesAndCommands[remoteName].push(commandName[1]);
+                remotesAndCommands[remoteName[1]].push(commandName[1]);
               }
             });
           });

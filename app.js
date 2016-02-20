@@ -9,7 +9,7 @@ var app = require('express')(),
     url  = 'http://localhost:' + port + '/',
     send = require('./send.js');
 
-var remotesAndCommands = [];
+var remotesAndCommands = {};
 
 server.listen(port);
 console.log("Express server listening on port " + port);

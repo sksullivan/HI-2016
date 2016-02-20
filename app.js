@@ -22,9 +22,10 @@ app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');
 });
 
-//Socket.io emits this event when a connection is made.
-io.sockets.on('initialConnection', function (socket) {
-  console.log("Client connected");
-  // Emit a message to send it to the client.
-  socket.emit('availableRemotes', send.list());
+io.on('connection', function(socket){
+    console.log('a user connected');
+    socket.on('disconnect', function(){
+      console.log('user disconnected');
+    });
+    socket.emit('availableRemotes', send.list());
 });

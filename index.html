@@ -4,7 +4,8 @@
     <script src="/socket.io/socket.io.js"></script>
 	<script>
   		var socket = io();
-     	socket.on('initialConnection', function(msg){
+  		
+     	socket.on('availableRemotes', function(msg){
      			console.log(msg);
      	});
 	</script>

@@ -27,5 +27,10 @@ io.on('connection', function(socket){
     socket.on('disconnect', function(){
       console.log('user disconnected');
     });
-    socket.emit('availableRemotes', send.list());
+    send.list(null,null, function(err, stdout, stderr){
+      console.log(err)
+      console.log(stdout)
+      console.log(stderr)
+    });
+    //socket.emit('availableRemotes', send.list());
 });

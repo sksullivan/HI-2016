@@ -18,25 +18,40 @@ console.log(url);
 app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');
 });
+
 io.on('connection', function(socket){
     
     console.log('a user connected');
     socket.on('disconnect', function(){
       console.log('user disconnected');
     });
+
     socket.emit('availableRemotes', remotesAndCommands);
 
-    socket.on('buttonPress', function(msg){
+    socket.on('singleButtonPress', function(msg){
       send.sendOnce(msg.remote, msg.code, function(err, stdout, stderr){
-        socket.emit('kek', {err, stdout, stderr});
+        if(err == null){
+          socket.emit(200);
+        }
+      });
+    });
+
+    socket.on('startButtonPress', function(msg){
+      send.sendStart(msg.remote, msg.code, function(err, stdout, stderr){
+        if(err == null){
+          socket.emit(200);
+        }
+      });
+    });
+
+    socket.on('stopButtonPress', function(msg){
+      send.sendStop(msg.remote, msg.code, function(err, stdout, stderr){
+        if(err == null){
+          socket.emit(200);
+        }
       });
     });
 });
-
-
-
-
-
 
 var getRemotesAndCommands = function(){
   send.list(null,null, function(err, stdout, stderr){

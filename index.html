@@ -26,11 +26,13 @@
      			});
              };
             	var timeoutId = 0;
-
+            	var longPress = function(){
+            		console.log('long')
+            	}
 				$(':button').mousedown(function() {
 					console.log('down');
 					console.log($(this).data('remotename'));
-    				timeoutId = setTimeout(myFunction, 500);
+    				timeoutId = setTimeout(longPress, 500);
 
 				}).bind('mouseup mouseleave', function() {
 					console.log('up');

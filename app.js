@@ -63,7 +63,7 @@ var getRemotesAndCommands = function(){
           remotesAndCommands[remoteName] = [];
           send.list(remoteName,null, function(err, stdout, stderr){
             var commands = stderr.split('\n');
-            commands.forEach(function(element, index, array){
+            commands.forEach(function(element, index){
               var commandName = element.match(/\s.*\s(.*)$/);
               if(commandName && commandName[1]){
                 remotesAndCommands[remoteName].push(commandName[1]);

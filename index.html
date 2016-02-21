@@ -11,18 +11,17 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="/socket.io/socket.io.js"></script>
 	<script>
-		function btnClick(remote, code){
+  		var socket = io();
+  		function btnClick(remote, code){
      		console.log(remote);
      		console.log(code);
      		socket.emit('singleButtonPress',{remote: remote, code: code});
      	};
-
-  		var socket = io();
      	socket.on('availableRemotes', function(msg){
      			console.log(msg);
      			for(var remoteName in msg){
      			msg[remoteName].forEach(function(remoteCode){
-     				var $input = $('<input type="button" value="'+remoteName+' '+remoteCode+'" class=".col-md-4" onlick="btnClick('+remoteName+','+remoteCode+')"/>');
+     				var $input = $('<input type="button" value="'+remoteName+' '+remoteCode+'" class=".col-md-4" onclick="btnClick('+remoteName+','+remoteCode+')"/>');
      				 $input.appendTo($("#buttonContainer"));
      			});
              };

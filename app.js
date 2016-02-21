@@ -34,18 +34,21 @@ io.on('connection', function(socket){
           socket.emit(200);
           console.log('pressed: '+msg.remote+' '+msg.code);
         }
+        else {
+          socket.emit(500);
+        }
       });
     });
 
     socket.on('startButtonPress', function(msg){
       console.log('start')
       send.sendStart(msg.remote, msg.code, function(err, stdout, stderr){
-        console.log(err)
-        console.log(stdout)
-        console.log(stderr)
         if(err == null){
           socket.emit(200);
           console.log('holding: '+msg.remote+' '+msg.code);
+        }
+        else {
+          socket.emit(500);
         }
       });
     });
@@ -53,12 +56,12 @@ io.on('connection', function(socket){
     socket.on('stopButtonPress', function(msg){
       console.log('stop');
       send.sendStop(msg.remote, msg.code, function(err, stdout, stderr){
-        console.log(err)
-        console.log(stdout)
-        console.log(stderr)
         if(err == null){
           socket.emit(200);
           console.log('let go of: '+msg.remote+' '+msg.code);
+        }
+        else {
+          socket.emit(500);
         }
       });
     });

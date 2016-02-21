@@ -22,7 +22,7 @@ exports.sendStart = function(remote, code){
   	if (!code) code = '';
 
   	var sendComm = command + ' SEND_START "' + remote + '" "' + code + '"';
-  	return exec(sendComm);
+  	return exec(sendComm, callback);
 };
 
 exports.sendStop = function(remote, code){
@@ -30,5 +30,5 @@ exports.sendStop = function(remote, code){
   	if (!code) code = '';
 
   	var sendComm = command + ' SEND_STOP "' + remote + '" "' + code + '"';
-  	return exec(sendComm);
+  	return exec(sendComm, callback);
 };

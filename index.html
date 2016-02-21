@@ -25,7 +25,6 @@
      		console.log(remote);
      		console.log(code);
      		console.log('long stop')
-     		currentlyLongPressing = true;
             socket.emit('stopButtonPress',{remote: remote, code: code});
         }
         var singlePress = function(remote, code){

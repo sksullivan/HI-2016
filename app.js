@@ -38,6 +38,7 @@ io.on('connection', function(socket){
     });
 
     socket.on('startButtonPress', function(msg){
+      console.log('start')
       send.sendStart(msg.remote, msg.code, function(err, stdout, stderr){
         console.log(err)
         console.log(stdout)
@@ -50,6 +51,7 @@ io.on('connection', function(socket){
     });
 
     socket.on('stopButtonPress', function(msg){
+      console.log('stop');
       send.sendStop(msg.remote, msg.code, function(err, stdout, stderr){
         console.log(err)
         console.log(stdout)

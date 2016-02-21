@@ -18,7 +18,7 @@ console.log(url);
 app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');
 });
-
+var timeoutData = {};
 io.on('connection', function(socket){
     
     console.log('a user connected');
@@ -65,8 +65,27 @@ io.on('connection', function(socket){
         }
       });
     });
+
+    socket.on('startSleepTimer', function(msg){
+      timeoutData[msg.remote] = setTimeout(sleepTimer,msg.duration*1000,msg.remote);
+    });
+
+    socket.on('cancelSleepTimer', function(msg){
+      clearTimeout(timeoutData[msg.remote]);
+      timeoutData[msg.remote] = null;
+    });
 });
 
+var sleepTimer = function(remoteName){
+  send.sendOnce(remoteName, "KEY_POWER", function(err, stdout, stderr){
+        if(err == null){
+          socket.emit(200);
+          console.log('sleepy time');
+        }
+        else {
+          socket.emit(500);
+        }
+}
 var getRemotesAndCommands = function(){
   send.list(null,null, function(err, stdout, stderr){
       var remotes = stderr.split('\n');

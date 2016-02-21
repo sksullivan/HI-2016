@@ -21,10 +21,21 @@
      			console.log(msg);
      			for(var remoteName in msg){
      			msg[remoteName].forEach(function(remoteCode){
-     				var $input = $('<input type="button" value="'+remoteName+' '+remoteCode+'" class=".col-md-4" onclick="btnClick(\'' + remoteName + '\',\'' + remoteCode + '\')"/>');
+     				var $input = $('<input type="button" value="'+remoteName+' '+remoteCode+'" data-remotename="'+remoteName+'" data-remotecode="'+remoteCode+'" class=".col-md-4"/>');
      				 $input.appendTo($("#buttonContainer"));
      			});
              };
+            	var timeoutId = 0;
+
+				$(':button').mousedown(function() {
+					console.log('down');
+					console.log($(this).data('remotename'));
+    				timeoutId = setTimeout(myFunction, 500);
+
+				}).bind('mouseup mouseleave', function() {
+					console.log('up');
+    				clearTimeout(timeoutId);
+				});
      	});
      	
 	</script>

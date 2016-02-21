@@ -32,6 +32,7 @@ io.on('connection', function(socket){
       send.sendOnce(msg.remote, msg.code, function(err, stdout, stderr){
         if(err == null){
           socket.emit(200);
+          console.log('pressed: '+msg.remote+' '+msg.code);
         }
       });
     });
@@ -40,6 +41,7 @@ io.on('connection', function(socket){
       send.sendStart(msg.remote, msg.code, function(err, stdout, stderr){
         if(err == null){
           socket.emit(200);
+          console.log('holding: '+msg.remote+' '+msg.code);
         }
       });
     });
@@ -48,6 +50,7 @@ io.on('connection', function(socket){
       send.sendStop(msg.remote, msg.code, function(err, stdout, stderr){
         if(err == null){
           socket.emit(200);
+          console.log('let go of: '+msg.remote+' '+msg.code);
         }
       });
     });

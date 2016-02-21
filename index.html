@@ -17,6 +17,8 @@
      		console.log(code);
      		socket.emit('singleButtonPress',{remote: remote, code: code});
      	};
+     	var currentlyLongPressing = false;
+     	var clicked = false;
      	socket.on('availableRemotes', function(msg){
      			console.log(msg);
      			for(var remoteName in msg){
@@ -25,20 +27,36 @@
      				 $input.appendTo($("#buttonContainer"));
      			});
              };
-            	var timeoutId = 0;
-            	var longPress = function(){
-            		console.log('long')
-            	}
-				$(':button').mousedown(function() {
-					console.log('down');
-					console.log($(this).data('remotename'));
-    				timeoutId = setTimeout(longPress, 500);
-
-				}).bind('mouseup mouseleave', function() {
-					console.log('up');
-    				clearTimeout(timeoutId);
-				});
      	});
+     	var longPress = function(remote, code){
+     		console.log(remote);
+     		console.log(code);
+     		console.log('long')
+     		currentlyLongPressing = true;
+            socket.emit('startButtonPress',{remote: remote, code: code});
+        }
+        var singlePress = function(remote, code){
+        	console.log(remote);
+     		console.log(code);
+     		console.log('single')
+     		socket.emit('singleButtonPress',{remote: remote, code: code});
+        }
+    	var timeoutId = 0;
+		$(':button').mousedown(function() {
+			var name = $(this).data('remotename');
+			var code = $(this).data('remotecode');
+			var clicked = true;
+			timeoutId = setTimeout(longPress(name,code), 500);
+
+		}).bind('mouseup mouseleave', function() {
+			if(clicked && !currentlyLongPressing){
+				var name = $(this).data('remotename');
+				var code = $(this).data('remotecode');
+				singlePress(name, code);
+			}
+			currentlyLongPressing = false;
+			clearTimeout(timeoutId);
+		});
      	
 	</script>
   	</head>

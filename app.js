@@ -26,9 +26,11 @@ io.on('connection', function(socket){
       console.log('user disconnected');
     });
 
-    socket.emit('availableRemotes', remotesAndCommands);
+    //socket.emit('availableRemotes', remotesAndCommands);
+    socket.emit('availableRemotes', {'remotes':['1','2']});
 
     socket.on('singleButtonPress', function(msg){
+      console.log(msg)
       send.sendOnce(msg.remote, msg.code, function(err, stdout, stderr){
         if(err == null){
           socket.emit(200);

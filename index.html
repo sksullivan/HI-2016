@@ -14,12 +14,19 @@
   		var socket = io();
      	var currentlyLongPressing = false;
      	var clicked = false;
-     	var longPress = function(remote, code){
+     	var longPressStart = function(remote, code){
      		console.log(remote);
      		console.log(code);
      		console.log('long')
      		currentlyLongPressing = true;
             socket.emit('startButtonPress',{remote: remote, code: code});
+        }
+        var longPressEnd = function(remote, code){
+     		console.log(remote);
+     		console.log(code);
+     		console.log('long stop')
+     		currentlyLongPressing = true;
+            socket.emit('stopButtonPress',{remote: remote, code: code});
         }
         var singlePress = function(remote, code){
         	console.log(remote);
@@ -40,13 +47,18 @@
 			var name = $(this).data('remotename');
 			var code = $(this).data('remotecode');
 			clicked = true;
-			timeoutId = setTimeout(longPress, 500, name, code);
+			timeoutId = setTimeout(longPressStart, 500, name, code);
 
 		}).bind('mouseup mouseleave', function() {
 			if(clicked && !currentlyLongPressing){
 				var name = $(this).data('remotename');
 				var code = $(this).data('remotecode');
 				singlePress(name, code);
+			}
+			else if(currentlyLongPressing){
+				var name = $(this).data('remotename');
+				var code = $(this).data('remotecode');
+				longPressEnd(name, code);
 			}
 			clicked = false;
 			currentlyLongPressing = false;

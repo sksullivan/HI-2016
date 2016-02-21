@@ -16,8 +16,11 @@
      	socket.on('availableRemotes', function(msg){
      			console.log(msg);
      			msg.samsung.forEach(function(element, index){
-     				var $input = $('<input type="button" value="'+element+'" />');
+     				var $input = $('<input type="button" value="'+element+'" class=".col-md-4"/>');
      				 $input.appendTo($("#buttonContainer"));
+     				 $(":button").click(function(event){
+     				 	console.log(event);
+     				 });
              });
      	});
 	</script>

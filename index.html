@@ -15,12 +15,12 @@
   		var socket = io();
      	socket.on('availableRemotes', function(msg){
      			console.log(msg);
-     			msg.forEach(function(remoteName){
+     			for(var remoteName in msg){
      			msg[remoteName].forEach(function(remoteCode){
      				var $input = $('<input type="button" value="'+remoteName+' '+remoteCode+'" class=".col-md-4" onlick="btnClick('+remoteName+','+remoteCode+')"/>');
      				 $input.appendTo($("#buttonContainer"));
      			});
-             });
+             };
      	});
      	function btnClick(remote, code){
      		console.log(remote);

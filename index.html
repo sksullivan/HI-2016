@@ -21,7 +21,7 @@
      			console.log(msg);
      			for(var remoteName in msg){
      			msg[remoteName].forEach(function(remoteCode){
-     				var $input = $('<input type="button" value="'+remoteName+' '+remoteCode+'" class=".col-md-4" onclick="btnClick('+remoteName+','+remoteCode+')"/>');
+     				var $input = $('<input type="button" value="'+remoteName+' '+remoteCode+'" class=".col-md-4" onclick="btnClick('+'"'+remoteName+'"'+','+'"'+remoteCode+'"'+')"/>');
      				 $input.appendTo($("#buttonContainer"));
      			});
              };

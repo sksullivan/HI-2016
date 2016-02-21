@@ -85,6 +85,7 @@ var sleepTimer = function(remoteName){
         else {
           socket.emit(500);
         }
+    });
 }
 var getRemotesAndCommands = function(){
   send.list(null,null, function(err, stdout, stderr){

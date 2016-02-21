@@ -39,7 +39,7 @@
 		$(':button').mousedown(function() {
 			var name = $(this).data('remotename');
 			var code = $(this).data('remotecode');
-			var clicked = true;
+			clicked = true;
 			timeoutId = setTimeout(longPress(name,code), 500);
 
 		}).bind('mouseup mouseleave', function() {
@@ -48,6 +48,7 @@
 				var code = $(this).data('remotecode');
 				singlePress(name, code);
 			}
+			clicked = false;
 			currentlyLongPressing = false;
 			clearTimeout(timeoutId);
 		});

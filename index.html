@@ -15,14 +15,18 @@
   		var socket = io();
      	socket.on('availableRemotes', function(msg){
      			console.log(msg);
-     			msg.samsung.forEach(function(element, index){
-     				var $input = $('<input type="button" value="'+element+'" class=".col-md-4"/>');
+     			msg.forEach(function(remoteName){
+     			msg[remoteName].forEach(function(remoteCode){
+     				var $input = $('<input type="button" value="'+remoteName+' '+remoteCode+'" class=".col-md-4" onlick="btnClick('+remoteName+','+remoteCode+')"/>');
      				 $input.appendTo($("#buttonContainer"));
-     				 $(":button").click(function(event){
-     				 	console.log(event);
-     				 });
+     			});
              });
      	});
+     	function btnClick(remote, code){
+     		console.log(remote);
+     		console.log(code);
+     		socket.emit('singleButtonPress',{remote: remote, code: code});
+     	};
 	</script>
   	</head>
 	<body>

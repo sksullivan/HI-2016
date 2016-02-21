@@ -39,6 +39,9 @@ io.on('connection', function(socket){
 
     socket.on('startButtonPress', function(msg){
       send.sendStart(msg.remote, msg.code, function(err, stdout, stderr){
+        console.log(err)
+        console.log(stdout)
+        console.log(stderr)
         if(err == null){
           socket.emit(200);
           console.log('holding: '+msg.remote+' '+msg.code);
@@ -48,6 +51,9 @@ io.on('connection', function(socket){
 
     socket.on('stopButtonPress', function(msg){
       send.sendStop(msg.remote, msg.code, function(err, stdout, stderr){
+        console.log(err)
+        console.log(stdout)
+        console.log(stderr)
         if(err == null){
           socket.emit(200);
           console.log('let go of: '+msg.remote+' '+msg.code);

@@ -7,7 +7,8 @@ var app = require('express')(),
     io = require('socket.io').listen(server),
     port = 8080,
     url  = 'http://localhost:' + port + '/',
-    send = require('./send.js');
+    lirc = require('lirc_node');
+    lirc.init();
 
 var remotesAndCommands = {};
 
@@ -26,8 +27,7 @@ io.on('connection', function(socket){
       console.log('user disconnected');
     });
 
-    //socket.emit('availableRemotes', remotesAndCommands);
-    socket.emit('availableRemotes', {'remotes':['1','2']});
+    socket.emit('availableRemotes', lirc.remotes);
 
     socket.on('singleButtonPress', function(msg){
       console.log(msg)
@@ -89,25 +89,3 @@ var sleepTimer = function(remoteName){
         }
     });
 }
-var getRemotesAndCommands = function(){
-  send.list(null,null, function(err, stdout, stderr){
-      var remotes = stderr.split('\n');
-      remotes.forEach(function(element, index, array){
-        var remoteName = element.match(/\s(.*)$/);
-        if(remoteName){
-          remoteName = remoteName[1];
-          remotesAndCommands[remoteName] = [];
-          send.list(remoteName,null, function(err, stdout, stderr){
-            var commands = stderr.split('\n');
-            commands.forEach(function(element, index){
-              var commandName = element.match(/\s.*\s(.*)$/);
-              if(commandName && commandName[1]){
-                remotesAndCommands[remoteName].push(commandName[1]);
-              }
-            });
-          });
-        }
-      });
-    });
-}
-getRemotesAndCommands();

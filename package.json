@@ -1,10 +1,7 @@
 {
-  "name": "ir-remote-backend",
+  "name": "Pi-Blaster",
   "version": "0.0.0",
   "private": true,
-  "scripts": {
-    "start": "node ./bin/www"
-  },
   "dependencies": {
     "socket.io": "latest",
 	"express": "latest"
